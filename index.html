@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OMM GOATs – HdM Stuttgart</title>
+  <style>
+    :root {
+      --goat-green: #2d6a4f;
+      --goat-gold: #f4d03f;
+      --goat-cream: #fdfaf0;
+      --goat-dark: #1a1a2e;
+      --goat-accent: #e8f5e9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--goat-dark);
+      color: var(--goat-cream);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      background: linear-gradient(160deg, #0d1b2a 0%, #1b4332 60%, #2d6a4f 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '🐐';
+      font-size: 14rem;
+      position: absolute;
+      top: -2rem;
+      right: -2rem;
+      opacity: 0.08;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .crown {
+      font-size: 3rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(90deg, var(--goat-gold), #fff, var(--goat-gold));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shine 4s linear infinite;
+      line-height: 1.1;
+    }
+
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+
+    .hero h1 span {
+      display: block;
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      -webkit-text-fill-color: var(--goat-gold);
+      color: var(--goat-gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .subtitle {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #a8d8b0;
+      max-width: 600px;
+      margin-inline: auto;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background: var(--goat-gold);
+      color: var(--goat-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+    }
+
+    /* ── Ticker ── */
+    .ticker-wrap {
+      background: var(--goat-gold);
+      color: var(--goat-dark);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0.55rem 0;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+    }
+
+    .ticker {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+    }
+
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── Stats bar ── */
+    .stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 2.5rem 2rem;
+      background: #111827;
+    }
+
+    .stat {
+      background: #1e293b;
+      border: 1px solid #2d6a4f44;
+      border-radius: 1rem;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      min-width: 140px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--goat-gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.3rem;
+    }
+
+    /* ── Section ── */
+    .section {
+      padding: 3rem 2rem;
+      max-width: 1100px;
+      margin-inline: auto;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--goat-gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-sub {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── GOAT Cards ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 1.2rem;
+      padding: 1.6rem 1.4rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #2d6a4f22 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px #2d6a4f55;
+      border-color: var(--goat-green);
+    }
+
+    .card-emoji {
+      font-size: 2.6rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .card-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      margin-bottom: 0.2rem;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--goat-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.55;
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-top: 0.8rem;
+      background: #0f2418;
+      color: #4ade80;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    /* ── Superpowers ── */
+    .powers {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .power {
+      background: #0f2418;
+      border: 1px solid #2d6a4f55;
+      border-radius: 0.9rem;
+      padding: 1.2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .power-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .power-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+    }
+
+    .power-desc {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Quote ── */
+    .quote-block {
+      background: linear-gradient(135deg, #1b4332, #0d2b1a);
+      border-left: 4px solid var(--goat-gold);
+      border-radius: 0 1rem 1rem 0;
+      padding: 2rem 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .quote-block::before {
+      content: '\201C';
+      font-size: 6rem;
+      color: var(--goat-gold);
+      opacity: 0.15;
+      position: absolute;
+      top: -1rem;
+      left: 1rem;
+      line-height: 1;
+      font-family: Georgia, serif;
+    }
+
+    .quote-text {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #e2e8f0;
+      line-height: 1.7;
+    }
+
+    .quote-source {
+      margin-top: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--goat-gold);
+      font-weight: 600;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      background: #0d1117;
+      color: #334155;
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+
+    footer a {
+      color: var(--goat-green);
+      text-decoration: none;
+    }
+
+    footer .goat-footer {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Divider ── */
+    hr.fancy {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #2d6a4f, transparent);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="crown">🐐</div>
+    <h1>
+      <span>Online Medien Management</span>
+      OMM GOATs
+    </h1>
+    <p class="subtitle">
+      Studierende der HdM Stuttgart, die keine Ahnung hatten, was sie erwartete –
+      und trotzdem die digitale Welt übernehmen werden.
+    </p>
+    <span class="badge">HdM Stuttgart · Offiziell inoffiziell</span>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <span class="ticker">
+      🐐 Content ist King &nbsp;·&nbsp; 🎯 KPI-Optimierung seit Geburt &nbsp;·&nbsp;
+      📊 Excel-Nerds mit Stil &nbsp;·&nbsp; 🚀 Disruption auf Bestellung &nbsp;·&nbsp;
+      ☕ Betrieben durch Koffein und Seminararbeit &nbsp;·&nbsp; 📱 Social Media Gurus in Ausbildung &nbsp;·&nbsp;
+      🌐 Digital first, Frühstück second &nbsp;·&nbsp; 💡 Ideen, die das HdM-WLAN lahmlegen &nbsp;·&nbsp;
+      🐐 Content ist King &nbsp;·&nbsp; 🎯 KPI-Optimierung seit Geburt &nbsp;·&nbsp;
+      📊 Excel-Nerds mit Stil &nbsp;·&nbsp; 🚀 Disruption auf Bestellung &nbsp;·&nbsp;
+      ☕ Betrieben durch Koffein und Seminararbeit &nbsp;·&nbsp; 📱 Social Media Gurus in Ausbildung &nbsp;·&nbsp;
+      🌐 Digital first, Frühstück second &nbsp;·&nbsp; 💡 Ideen, die das HdM-WLAN lahmlegen &nbsp;·&nbsp;
+    </span>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">∞</div>
+      <div class="stat-label">PowerPoint-Slides</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Stunden Schlaf (ø)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">100%</div>
+      <div class="stat-label">Buzzword-Dichte</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">42</div>
+      <div class="stat-label">offene Browser-Tabs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">🥇</div>
+      <div class="stat-label">Abgabe pünktlich? Nein.</div>
+    </div>
+  </div>
+
+  <hr class="fancy" />
+
+  <!-- GOAT CARDS -->
+  <div class="section">
+    <div class="section-title">Die GOATs im Überblick</div>
+    <div class="section-sub">
+      Jeder Studiengang hat Typen. OMM hat Archetypen. 🐐
+    </div>
+    <div class="cards">
+
+      <div class="card">
+        <span class="card-emoji">🧠</span>
+        <div class="card-name">Die Strategin</div>
+        <div class="card-title">Chief Everything Officer</div>
+        <div class="card-desc">
+          Hat bereits ein 47-seitiges Framework entwickelt, bevor der Prof die Aufgabe zu Ende gelesen hat.
+          LinkedIn-Profil: professioneller als das der meisten Dozenten.
+        </div>
+        <span class="card-tag">#ThinkingInFrameworks</span>
+      </div>
+
+      <div class="card">
+        <span class="card-emoji">📸</span>
+        <div class="card-name">Der Content Creator</div>
+        <div class="card-title">Visual Storytelling Lead</div>
+        <div class="card-desc">
+          Dreht Reels über das Leid der Prüfungsphase – und erntet dabei mehr Views als die HdM offiziell hat.
+          Hat eine Meinung zu jeder Schriftart.
+        </div>
+        <span class="card-tag">#AestheticsFirst</span>
+      </div>
+
+      <div class="card">
+        <span class="card-emoji">📈</span>
+        <div class="card-name">Die Data Nerd</div>
+        <div class="card-title">Analytics Evangelist</div>
+        <div class="card-desc">
+          Sieht in jedem Lebensbereich eine Conversion Rate. Hat die Auslastung der Mensa optimiert.
+          Spricht in p-Werten, auch beim Abendessen.
+        </div>
+        <span class="card-tag">#CorrelationNotCausation</span>
+      </div>
+
+      <div class="card">
+        <span class="card-emoji">🛠️</span>
+        <div class="card-name">Der Hacker</div>
+        <div class="card-title">Full-Stack Wizard</div>
+        <div class="card-desc">
+          Baut über Nacht ein Tool, das die Gruppenarbeit für alle übernimmt – und wundert sich dann,
+          warum er immer alles selbst macht.
+        </div>
+        <span class="card-tag">#ItWorksOnMyMachine</span>
+      </div>
+
+      <div class="card">
+        <span class="card-emoji">🎤</span>
+        <div class="card-name">Die Präsentatorin</div>
+        <div class="card-title">Grand Duchess of Decks</div>
+        <div class="card-desc">
+          Verwandelt jede 15-Minuten-Präsentation in ein TED Talk-Erlebnis. Die Folien sind ein Kunstwerk.
+          Der Inhalt auch (meistens).
+        </div>
+        <span class="card-tag">#SlideDesignMatters</span>
+      </div>
+
+      <div class="card">
+        <span class="card-emoji">🤝</span>
+        <div class="card-name">Der Netzwerker</div>
+        <div class="card-title">Social Capital Manager</div>
+        <div class="card-desc">
+          Kennt jeden Prof beim Vornamen. Taucht auf jedem Branchen-Event auf, obwohl er eigentlich
+          Klausur hat. Sein Kontakt-Netzwerk könnte eine Stadt verwalten.
+        </div>
+        <span class="card-tag">#ItIsWhoYouKnow</span>
+      </div>
+
+      <div class="card">
+        <span class="card-emoji">☕</span>
+        <div class="card-name">Die Koffein-Forscherin</div>
+        <div class="card-title">Late Night Sprint Specialist</div>
+        <div class="card-desc">
+          Ihre beste Arbeit entsteht zwischen 2 und 5 Uhr morgens. Hat die Bibliothek-Schließzeiten
+          schon mehrfach herausgefordert. Kennt alle Döner-Läden mit Lieferdienst bis Mitternacht.
+        </div>
+        <span class="card-tag">#DeadlineActivated</span>
+      </div>
+
+      <div class="card">
+        <span class="card-emoji">🌍</span>
+        <div class="card-name">Der Visionär</div>
+        <div class="card-title">Future of Everything Expert</div>
+        <div class="card-desc">
+          Jede Seminararbeit endet mit "...und das wird die Welt für immer verändern."
+          Irgendwie hat er damit auch nicht Unrecht.
+        </div>
+        <span class="card-tag">#ThinkBig</span>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="fancy" />
+
+  <!-- SUPERPOWERS -->
+  <div class="section">
+    <div class="section-title">Kollektive Superpowers</div>
+    <div class="section-sub">Was OMM-Studierende können, die anderen nur googeln 🦸</div>
+    <div class="powers">
+
+      <div class="power">
+        <span class="power-icon">⚡</span>
+        <div>
+          <div class="power-name">Deadline-Telekinese</div>
+          <div class="power-desc">Verschiebt Abgaben allein durch kollektiven Willensakt</div>
+        </div>
+      </div>
+
+      <div class="power">
+        <span class="power-icon">🔮</span>
+        <div>
+          <div class="power-name">Trend-Orakel</div>
+          <div class="power-desc">Weiß, was nächstes Quartal viral geht – leider nur in Theorie</div>
+        </div>
+      </div>
+
+      <div class="power">
+        <span class="power-icon">🧩</span>
+        <div>
+          <div class="power-name">Tool-Hopping</div>
+          <div class="power-desc">Meistert 17 SaaS-Tools gleichzeitig, davon 14 im Free Tier</div>
+        </div>
+      </div>
+
+      <div class="power">
+        <span class="power-icon">🎭</span>
+        <div>
+          <div class="power-name">Buzzword-Synthese</div>
+          <div class="power-desc">Generiert in Echtzeit sinnvolle (™) Sätze aus Buzzwords</div>
+        </div>
+      </div>
+
+      <div class="power">
+        <span class="power-icon">🕐</span>
+        <div>
+          <div class="power-name">Chrono-Kompression</div>
+          <div class="power-desc">Erledigt in der letzten Stunde, was andere in einer Woche schaffen</div>
+        </div>
+      </div>
+
+      <div class="power">
+        <span class="power-icon">🐑</span>
+        <div>
+          <div class="power-name">Gruppen-Dynamik</div>
+          <div class="power-desc">Überlebt jede Gruppenarbeit – psychisch oder physisch</div>
+        </div>
+      </div>
+
+      <div class="power">
+        <span class="power-icon">🤖</span>
+        <div>
+          <div class="power-name">KI-Flüstern</div>
+          <div class="power-desc">Verhandelt mit LLMs wie mit Kolleg:innen – und bekommt bessere Antworten</div>
+        </div>
+      </div>
+
+      <div class="power">
+        <span class="power-icon">📡</span>
+        <div>
+          <div class="power-name">Omnichannel-Denken</div>
+          <div class="power-desc">Sieht jeden Touchpoint, auch dort, wo noch keiner gesucht hat</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="fancy" />
+
+  <!-- QUOTE -->
+  <div class="section">
+    <div class="quote-block">
+      <p class="quote-text">
+        Andere studieren, um einen Job zu finden. OMM-Studierende studieren,
+        um den Job zu erfinden – am besten als eigene GmbH, finanziert durch einen
+        Pitch, den sie gestern Abend auf einer Serviette skizziert haben.
+      </p>
+      <div class="quote-source">— Die kollektive Weisheit des OMM-Flurs, HdM Stuttgart</div>
+    </div>
+
+    <div class="quote-block">
+      <p class="quote-text">
+        "Haben wir schon eine Customer Journey dafür?"
+      </p>
+      <div class="quote-source">— Jeder OMM-Studierende, mindestens einmal pro Woche</div>
+    </div>
+  </div>
+
+  <hr class="fancy" />
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="goat-footer">🐐</span>
+    <strong>OMM GOATs &mdash; Hochschule der Medien Stuttgart</strong><br />
+    Studiengang Online Medien Management &nbsp;·&nbsp;
+    <a href="https://www.hdm-stuttgart.de" target="_blank" rel="noopener">hdm-stuttgart.de</a><br /><br />
+    Diese Seite ist liebevoll gemeint und erhebt keinerlei wissenschaftlichen Anspruch.<br />
+    Alle Ähnlichkeiten mit echten Studierenden sind beabsichtigt und ein Kompliment. 😉
+  </footer>
+
+</body>
+</html>
